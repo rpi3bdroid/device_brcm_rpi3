@@ -1,11 +1,13 @@
-Read it first : https://github.com/android-rpi/local_manifests/tree/android10
+Read it first : https://github.com/rpi3bdroid/local_manifests/tree/android10
 
 # Build Kernel
  $ sudo apt install gcc-arm-linux-gnueabihf libssl-dev
  $ cd kernel/rpi
- $ ARCH=arm scripts/kconfig/merge_config.sh arch/arm/configs/bcm2709_defconfig kernel/configs/android-base.config kernel/configs/android-recommended.config
- $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make zImage
- $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make dtbs
+ $ KERNEL_OBJ=$(realpath -m ../../out/target/product/rpi3/KERNEL_OBJ)
+ $ mkdir -p "$KERNEL_OBJ"
+ $ ARCH=arm scripts/kconfig/merge_config.sh -O "$KERNEL_OBJ" arch/arm/configs/bcm2709_defconfig kernel/configs/android-base.config kernel/configs/android-recommended.config
+ $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make O="$KERNEL_OBJ" zImage
+ $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make O="$KERNEL_OBJ" dtbs
 
 # Install python mako module
  $ sudo apt install python-mako
@@ -32,9 +34,9 @@ Read it first : https://github.com/android-rpi/local_manifests/tree/android10
   
 # Copy kernel & ramdisk to BOOT partition
   device/brcm/rpi3/boot/* to p1:/
-  kernel/rpi/arch/arm/boot/zImage to p1:/
-  kernel/rpi/arch/arm/boot/dts/bcm2710-rpi-3-b.dtb to p1:/
-  kernel/rpi/arch/arm/boot/dts/overlays/vc4-kms-v3d.dtbo to p1:/overlays/vc4-kms-v3d.dtbo
+  out/target/product/rpi3/KERNEL_OBJ/arch/arm/boot/zImage to p1:/
+  out/target/product/rpi3/KERNEL_OBJ/arch/arm/boot/dts/bcm2710-rpi-3-b.dtb to p1:/
+  out/target/product/rpi3/KERNEL_OBJ/arch/arm/boot/dts/overlays/vc4-kms-v3d.dtbo to p1:/overlays/vc4-kms-v3d.dtbo
   out/target/product/rpi3/ramdisk.img to p1:/
 
 # HDMI_MODE : If DVI monitor does not work, try followings for p1:/config.txt
