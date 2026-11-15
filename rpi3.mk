@@ -26,7 +26,6 @@ PRODUCT_MANUFACTURER := ARPI
 include frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    debug.drm.mode.force=1280x720 \
     gralloc.drm.device=/dev/dri/card0 \
     ro.opengles.version=131072 \
     ro.config.low_ram=true \
@@ -34,7 +33,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # application packages
 PRODUCT_PACKAGES += \
-    RpLauncher
+    RpLauncher \
+    Settings
 
 # system packages
 PRODUCT_PACKAGES += \
@@ -74,6 +74,8 @@ PRODUCT_COPY_FILES := \
     $(LOCAL_PATH)/fstab.rpi3:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.rpi3 \
     $(LOCAL_PATH)/fstab.rpi3:$(TARGET_COPY_OUT_RAMDISK)/fstab.rpi3 \
     $(LOCAL_PATH)/Generic.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Generic.kl \
+    $(LOCAL_PATH)/firmware/brcm/brcmfmac43430-sdio.bin:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/brcm/brcmfmac43430-sdio.bin \
+    $(LOCAL_PATH)/firmware/brcm/brcmfmac43430-sdio.txt:$(TARGET_COPY_OUT_RAMDISK)/lib/firmware/brcm/brcmfmac43430-sdio.txt \
     $(LOCAL_PATH)/firmware/brcm/brcmfmac43430-sdio.bin:root/lib/firmware/brcm/brcmfmac43430-sdio.bin \
     $(LOCAL_PATH)/firmware/brcm/brcmfmac43430-sdio.txt:root/lib/firmware/brcm/brcmfmac43430-sdio.txt \
     $(LOCAL_PATH)/firmware/brcm/brcmfmac43455-sdio.bin:root/lib/firmware/brcm/brcmfmac43455-sdio.bin \

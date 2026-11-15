@@ -19,6 +19,21 @@ Read it first : https://github.com/rpi3bdroid/local_manifests/tree/android10
  $ make ramdisk systemimage vendorimage
 
 # Prepare sd card
+ Alternatively, generate a complete SD card image from the Android source root:
+  $ python3 device/brcm/rpi3/make-sdcard-image.py
+ Requires sfdisk, dosfstools, mtools and e2fsprogs on the build host.
+ Uses the built kernel under out/target/product/rpi3/KERNEL_OBJ.
+ Output: out/target/product/rpi3/rpi3-android10-sdcard.img
+ The default image is 4096 MiB: BOOT 256 MiB, system 640 MiB,
+ vendor 128 MiB, userdata 3071 MiB, plus 1 MiB partition alignment.
+ Use an SD card of at least 8 GB. In Raspberry Pi Imager, select
+ "Use custom" and choose the .img file, then select the SD card and write.
+ Verify the downloaded/copied image with its .img.sha256 file.
+ userdata does not automatically expand to fill a larger SD card.
+ To choose another image size, pass --size-mib SIZE and --output FILE.
+ The following manual partitioning and copying steps are already performed
+ by the image generator.
+
  Partitions of the card should be set-up like followings.
   p1 256MB for BOOT : Do fdisk : W95 FAT32(LBA) & Bootable, mkfs.vfat
   p2 640MB for /system : Do fdisk, new primary partition
